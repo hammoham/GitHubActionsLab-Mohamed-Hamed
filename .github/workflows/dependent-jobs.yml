@@ -40,10 +40,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: OS Info
+      - name: OSs Info
         run: uname -a
 
       - name: Create file
         run: |
           echo "Hello from macOS" > test.txt
-          cat test.txt
+          cat test.txt 
