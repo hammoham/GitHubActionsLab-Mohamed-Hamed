@@ -1,48 +1,50 @@
 
-name: Workflow 1 - Dependent Jobs
+          name: Workflow 2 - Multi Platform
 
 on:
-  push:
+  pull_request:
     branches: [ "master" ]
 
 jobs:
-  build:
-    name: Build Job
+
+  ubuntu-job:
     runs-on: ubuntu-latest
     steps:
-      - name: Print build message
-        run: echo "Building application..."
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Simulate build work
+      - name: OS Info
+        run: uname -a
+
+      - name: Create file
         run: |
-          echo "Compiling..."
-          sleep 3
-          echo "Build complete."
+          echo "Hello from Ubuntu" > test.txt
+          cat test.txt
 
-  test:
-    name: Test Job
-    runs-on: ubuntu-latest
-    needs: build
+  windows-job:
+    runs-on: windows-latest
     steps:
-      - name: Print test message
-        run: echo "Running tests..."
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Simulate testing
+      - name: OS Info
+        run: systeminfo
+
+      - name: Create file
         run: |
-          echo "Executing unit tests..."
-          sleep 3
-          echo "All tests passed."
+          echo Hello from Windows > test.txt
+          type test.txt
 
-  deploy:
-    name: Deploy Job
-    runs-on: ubuntu-latest
-    needs: test
+  macos-job:
+    runs-on: macos-latest
     steps:
-      - name: Print deploy message
-        run: echo "Deploying application..."
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Simulate deployment
+      - name: OSs Info
+        run: uname -a
+
+      - name: Create file
         run: |
-          echo "Deploying to server..."
-          sleep 3
-          echo "Deployment finished."
+          echo "Hello from macOS" > test.txt
+          cat test.txt 
